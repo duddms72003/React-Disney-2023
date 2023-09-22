@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query"; //react 버전 18에 맞춰서 tanstack이걸로 사용
-import { fetchCoins } from "./api";
+import { fetchCharater } from "./api";
 import { isDarkAtom } from "../atoms";
 import { useSetRecoilState } from "recoil";
 
@@ -24,19 +24,19 @@ const Title = styled.h1`
   font-size: 20px;
 `;
 
-const CoinsListContainer = styled.div`
+const CharactersContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const CoinsList = styled.ul`
+const CharacterList = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 `;
 
-const Coin = styled.li`
+const Charater = styled.li`
   background-color: ${(props) => props.theme.cardBgColor};
   color: ${(props) => props.theme.textColor};
   border-radius: 50px;
@@ -93,7 +93,7 @@ const ToggleBtn = styled.button`
   border: none;
 `;
 
-interface ICoin {
+interface ICharacter {
   id: string;
   name: string;
   symbol: string;
@@ -104,10 +104,13 @@ interface ICoin {
   imageUrl: string;
 }
 
-function Coins() {
+function Characters() {
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDartAtom = () => setDarkAtom((prev) => !prev);
-  const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
+  const { isLoading, data } = useQuery<ICharacter[]>(
+    ["allCharacters"],
+    fetchCharater
+  );
 
   return (
     <Container>
@@ -119,26 +122,26 @@ function Coins() {
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
-        <CoinsListContainer>
-          <CoinsList>
-            {data?.slice(0, 30).map((coin) => (
-              <Coin key={coin.id}>
-                <Link to={`/${coin.id}`} state={coin}>
+        <CharactersContainer>
+          <CharacterList>
+            {data?.slice(0, 30).map((character) => (
+              <Charater key={character.id}>
+                <Link to={`/${character.id}`} state={character}>
                   <ImgContainer>
                     <img
-                      src={coin.imageUrl} // coin 객체의 imageUrl 속성을 사용하여 이미지를 동적으로 로드합니다.
-                      alt={coin.name}
+                      src={character.imageUrl} // character 객체의 imageUrl 속성을 사용하여 이미지를 동적으로 로드합니다.
+                      alt={character.name}
                     />
                   </ImgContainer>
-                  {coin.name}
+                  {character.name}
                 </Link>
-              </Coin>
+              </Charater>
             ))}
-          </CoinsList>
-        </CoinsListContainer>
+          </CharacterList>
+        </CharactersContainer>
       )}
     </Container>
   );
 }
 
-export default Coins;
+export default Characters;

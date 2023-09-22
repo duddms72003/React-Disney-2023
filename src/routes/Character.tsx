@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useLocation, Outlet, Link } from "react-router-dom";
 import { styled } from "styled-components";
-import { fetchCoinInfo } from "./api";
+import { fetchCharaterDetail } from "./api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -21,7 +21,6 @@ const PrevBtn = styled.button`
 
 const CharacterContainer = styled.div`
   width: 100%;
-
   margin-top: 20px;
   margin-bottom: 350px;
   text-align: center;
@@ -45,7 +44,7 @@ const CharacterImg = styled.span`
 const CharaterTitle = styled.p`
   color: #fff;
   font-size: 25px;
-  margin: 30px 0;
+  margin: 55px 0;
 `;
 
 const CharacterDetail = styled.ul`
@@ -70,30 +69,6 @@ const Header = styled.header`
   justify-content: space-between;
 `;
 
-const Overview = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  border-radius: 10px;
-`;
-
-const OverviewItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  span:first-child {
-    font-size: 10px;
-    font-weight: 400;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-  }
-`;
-
-const Description = styled.p`
-  margin: 20px 0;
-`;
-
 const Loader = styled.p`
   text-align: center;
   height: 100vh;
@@ -109,23 +84,8 @@ const Tabs = styled.div`
   gap: 10px;
 `;
 
-const Tab = styled.span<{ $isActive: boolean }>`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 7px 0;
-  border-radius: 10px;
-  a {
-    display: block;
-    color: ${(props) =>
-      props.$isActive ? props.theme.accentColor : props.theme.textColor};
-  }
-`;
-
 interface RouteParams {
-  coinId: string;
+  characterId: string;
 }
 
 interface LocationState {
@@ -141,12 +101,12 @@ interface InfoData {
   films: string[];
 }
 
-function Coin() {
-  const { coinId } = useParams<keyof RouteParams>() as RouteParams;
+function Character() {
+  const { characterId } = useParams<keyof RouteParams>() as RouteParams;
   const { state } = useLocation() as LocationState;
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
-    ["info", coinId],
-    () => fetchCoinInfo(`${coinId}`)
+    ["info", characterId],
+    () => fetchCharaterDetail(`${characterId}`)
   );
 
   // console.log(infoData);
@@ -167,7 +127,7 @@ function Coin() {
           <CharacterContainer>
             <CharacterImg>
               <img
-                src={state.imageUrl} // coin 객체의 imageUrl 속성을 사용하여 이미지를 동적으로 로드합니다.
+                src={state.imageUrl} // Character 객체의 imageUrl 속성을 사용하여 이미지를 동적으로 로드합니다.
               />
             </CharacterImg>
             <CharaterTitle>{infoData?.name}</CharaterTitle>
@@ -179,9 +139,9 @@ function Coin() {
           </CharacterContainer>
         </>
       )}
-      <Outlet context={{ coinId }} />
+      <Outlet context={{ characterId }} />
     </Container>
   );
 }
 
-export default Coin;
+export default Character;

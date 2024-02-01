@@ -13,6 +13,7 @@
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "apexcharts": "^3.41.1",
+    "gh-pages": "^6.1.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
@@ -30,7 +31,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -53,5 +56,6 @@
   "devDependencies": {
     "@types/react-helmet": "^6.1.6",
     "@types/styled-components": "^5.1.26"
-  }
+  },
+  "homepage": "https://jaepchoii.github.io/React-Disney-2023"
 }

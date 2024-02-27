@@ -130,9 +130,6 @@ function Character() {
 
           <CharacterContainer>
             <CharacterImg>
-              {/* <img
-                src={state.imageUrl} // Character 객체의 imageUrl 속성을 사용하여 이미지를 동적으로 로드합니다.
-              /> */}
               <img src={state?.imageUrl} alt="" />
             </CharacterImg>
             <CharaterTitle>{infoData?.name}</CharaterTitle>

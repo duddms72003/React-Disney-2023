@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+// import { styled } from "styled-components";
 import { DefaultTheme } from "styled-components/dist/types";
 
 export const darkTheme: DefaultTheme = {

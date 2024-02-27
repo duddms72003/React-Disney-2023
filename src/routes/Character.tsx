@@ -89,6 +89,7 @@ interface RouteParams {
 }
 
 interface LocationState {
+  imageUrl: string | undefined;
   state: {
     name: string;
     imageUrl: string;
@@ -103,7 +104,10 @@ interface InfoData {
 
 function Character() {
   const { characterId } = useParams<keyof RouteParams>() as RouteParams;
-  const { state } = useLocation() as LocationState;
+  // const { state } = useLocation() as LocationState;
+  const { state } = (useLocation() as { state: LocationState }) || {
+    state: null,
+  };
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", characterId],
     () => fetchCharaterDetail(`${characterId}`)
@@ -126,9 +130,10 @@ function Character() {
 
           <CharacterContainer>
             <CharacterImg>
-              <img
+              {/* <img
                 src={state.imageUrl} // Character 객체의 imageUrl 속성을 사용하여 이미지를 동적으로 로드합니다.
-              />
+              /> */}
+              <img src={state?.imageUrl} alt="" />
             </CharacterImg>
             <CharaterTitle>{infoData?.name}</CharaterTitle>
             <CharacterDetail>

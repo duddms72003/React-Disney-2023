@@ -6,7 +6,7 @@ interface IRouterProps {}
 
 function Router({}: IRouterProps) {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<Characters />} />
         <Route path="/:characterId" element={<Character />} />
